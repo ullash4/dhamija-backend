@@ -18,7 +18,21 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
       await client.connect();
-      console.log('bd connected')
+      const jobsCollection=client.db('dhamija-jobs').collection('jobs')
+        const profileCollection=client.db('dhamija-jobs').collection('profile')
+
+        // get all jobs
+        app.get('/jobs', async(req, res)=>{
+          const query = {};
+            const jobs = await jobsCollection.find(query).toArray()
+            res.send(jobs)
+        })
+        // get all profile
+        app.get('/profile', async(req, res)=>{
+          const query = {}
+            const profile = await profileCollection.find(query).toArray()
+            res.send(profile)
+        })
 
 
     } finally {
